@@ -3,13 +3,15 @@ services:
     image: bitnami/postgresql:latest
     restart: always
     volumes:
-      - pgdata:/bitnami/postgresql
+      - ./pgdata:/bitnami/postgresql
     ports:
       - 5432:5432
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRESQL_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - app-NET
 
 
   pgadmin4:
@@ -26,6 +28,8 @@ services:
       - ./pgpassfile:/pgpassfile:ro
     depends_on:
       - postgresql
+    networks:
+      - app-NET
 
   backend:
     build: ./backend
@@ -42,6 +46,12 @@ services:
       - POSTGRES_PORT=${POSTGRES_PORT}
     volumes:
       - ./backend:/app
+    networks:
+      - app-NET
 
 volumes:
   pgdata:
+
+networks:
+  app-NET:
+    driver: bridge
