@@ -1,0 +1,6 @@
+#Elasticsearch[] Logstash[] Kibana[] collect logs
+
+services:
+  logstash:
+    image: elasticsearch:9.2.0
+    network:
