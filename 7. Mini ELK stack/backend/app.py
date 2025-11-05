@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # konfiguracja logowania do pliku
 logging.basicConfig(
-    filename='/var/log/app1.log',
+    filename='/var/log/app-flask.log',
     level=logging.INFO,
     format='%(asctime)s %(levelname)s %(message)s'
 )
