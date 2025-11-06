@@ -1,3 +1,17 @@
 services:
   nginx: 
+    image: nginx:mainline-perl
+    ports:
+      - "8080:80"
+    environment:
+     - NGINX_HOST=foobar.com
+     - NGINX_PORT=80
+    networks:
+      - vnet-lb
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
 
+networks:
+  vnet-lb:
+    driver: bridge
