@@ -1,4 +1,4 @@
-#cadvisor[] grafana[] prometheus
+#cadvisor[v] grafana[] prometheus
 
 #cadvisor collecting metrics about every container running
 
@@ -6,7 +6,7 @@ services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.47.0
     container_name: cadvisor
-    privileged: true
+    privileged: true #full host access
     ports:
       - "8080:8080"
     volumes:
@@ -16,3 +16,15 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     restart: always
+    networks:
+      - monitoring-vnet
+
+  prometheus:
+    image: prom/prometheus:main
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro  
+    networks:
+      - monitoring-vnet
