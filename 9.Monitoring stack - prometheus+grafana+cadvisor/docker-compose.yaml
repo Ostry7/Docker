@@ -25,18 +25,26 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro  
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro  
     networks:
       - monitoring-vnet
-    grafana:
-      image: grafana/grafana:latest
-      container_name: grafana
-      ports:
-        - "3000:3000"
-      networks:
-        - monitoring
-      depends_on:
-        - prometheus
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring-vnet
+    depends_on:
+      - prometheus
+    
+  flask-app:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    networks:
+      - monitoring-vnet
 
 networks:
   monitoring-vnet:

@@ -2,9 +2,9 @@ global:
   scrape_interval: 5s
 
 scrape_configs:
-  - job_name: "prometheus"
+  - job_name: "flask-app"
     static_configs:
-      - targets: ["prometheus:9090"]
+      - targets: ["flask-app:5000"]
 
   - job_name: "cadvisor"
     static_configs:
